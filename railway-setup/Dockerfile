@@ -45,10 +45,13 @@ git config --global user.name "${GIT_NAME:-Claude Code Bot}"\n\
 echo "✅ Setup complete!"\n\
 echo ""\n\
 echo "🤖 To start Claude Code:"\n\
-echo "   1. Connect to this Railway service via Terminal"\n\
-echo "   2. Run: claude auth"\n\
-echo "   3. Run: claude"\n\
-echo "   4. Start autonomous mode: /ralph-loop"\n\
+echo "   1. Connect: railway shell"\n\
+echo "   2. Configure git: git config --global user.email ..."\n\
+echo "   3. Auth GitHub: gh auth login"\n\
+echo "   4. Start Claude: claude"\n\
+echo "   5. Start Ralph: /ralph-loop"\n\
+echo ""\n\
+echo "⚙️  ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:+✓ Set}${ANTHROPIC_API_KEY:-✗ Not set - add in Railway Variables}"\n\
 echo ""\n\
 echo "📍 Current directory: $(pwd)"\n\
 echo "📁 Repository ready at: /app/Midnight_Code"\n\
