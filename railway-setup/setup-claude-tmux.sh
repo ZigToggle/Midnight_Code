@@ -26,17 +26,21 @@ cat > /home/claudeuser/.claude/settings.json << 'EOF'
 }
 EOF
 
+# Save OAuth token for claudeuser
+echo "4. Configuring OAuth token..."
+echo "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" > /home/claudeuser/.claude/token
+
 # Give ownership of /app to claudeuser
-echo "4. Setting permissions..."
+echo "5. Setting permissions..."
 chown -R claudeuser:claudeuser /app /home/claudeuser
 
 # Configure git for claudeuser
-echo "5. Configuring git..."
+echo "6. Configuring git..."
 su - claudeuser -c 'git config --global user.email "claude-bot@peripherdev.com"'
 su - claudeuser -c 'git config --global user.name "Claude Multi-Agent Bot"'
 
 # Create persistent Claude script
-echo "6. Creating auto-restart script..."
+echo "7. Creating auto-restart script..."
 cat > /home/claudeuser/run-claude-persistent.sh << 'INNERSCRIPT'
 #!/bin/bash
 
@@ -89,7 +93,7 @@ chmod +x /home/claudeuser/run-claude-persistent.sh
 chown claudeuser:claudeuser /home/claudeuser/run-claude-persistent.sh
 
 # Install tmux if not present
-echo "7. Installing tmux..."
+echo "8. Installing tmux..."
 which tmux &>/dev/null || (apt-get update && apt-get install -y tmux)
 
 echo ""
