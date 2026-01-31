@@ -1,0 +1,9 @@
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "railway-setup/Dockerfile"
+buildCommand = ""
+
+[deploy]
+startCommand = "/bin/bash /app/start.sh"
+restartPolicyType = "ALWAYS"
+restartPolicyMaxRetries = 10
