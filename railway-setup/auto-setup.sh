@@ -53,22 +53,28 @@ echo "Configuring git..."
 su - claudeuser -c 'git config --global user.email "claude-bot@peripherdev.com"'
 su - claudeuser -c 'git config --global user.name "Claude Multi-Agent Bot"'
 
-# Copy start script
+# Copy scripts
 cp railway-setup/start-ralph.sh /home/claudeuser/
-chmod +x /home/claudeuser/start-ralph.sh
-chown claudeuser:claudeuser /home/claudeuser/start-ralph.sh
+cp railway-setup/start-claude-daemon.sh /home/claudeuser/
+chmod +x /home/claudeuser/start-ralph.sh /home/claudeuser/start-claude-daemon.sh
+chown claudeuser:claudeuser /home/claudeuser/start-ralph.sh /home/claudeuser/start-claude-daemon.sh
 
 echo ""
 echo "✅ Setup complete!"
 echo ""
-echo "📋 To start Claude:"
-echo "   railway ssh"
-echo "   su - claudeuser"
-echo "   tmux new -s ralph ~/start-ralph.sh"
+echo "🚀 Starting Claude Code daemon..."
 echo ""
-echo "Or run: railway ssh -c 'su - claudeuser -c \"tmux new -s ralph ~/start-ralph.sh\"'"
-echo ""
-echo "Container ready. Keeping alive..."
 
-# Keep container alive
-tail -f /dev/null
+# Start Claude daemon as claudeuser in background
+su - claudeuser -c '~/start-claude-daemon.sh' &
+
+CLAUDE_PID=$!
+echo "Claude daemon started with PID: $CLAUDE_PID"
+echo "Log file: /home/claudeuser/claude-output.log"
+echo ""
+echo "To view logs: railway ssh → tail -f /home/claudeuser/claude-output.log"
+echo "To interact: railway ssh → su - claudeuser → tmux attach -t ralph"
+echo ""
+
+# Wait for daemon (keeps container alive)
+wait $CLAUDE_PID
