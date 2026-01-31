@@ -25,9 +25,36 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | \
 # Install Claude Code globally
 RUN npm install -g @anthropic-ai/claude-code
 
-# Copy startup script
-COPY start.sh /app/start.sh
-RUN chmod +x /app/start.sh
+# Create startup script inline (avoids COPY path issues)
+RUN echo '#!/bin/bash\n\
+echo "🚂 Railway Claude Code Server Starting..."\n\
+\n\
+if [ ! -d "/app/Midnight_Code" ]; then\n\
+    echo "📦 Cloning repository..."\n\
+    git clone https://github.com/${GITHUB_ORG:-ZigToggle}/${GITHUB_REPO:-Midnight_Code}.git /app/Midnight_Code\n\
+    cd /app/Midnight_Code\n\
+else\n\
+    echo "✅ Repository already cloned"\n\
+    cd /app/Midnight_Code\n\
+    git pull origin main\n\
+fi\n\
+\n\
+git config --global user.email "${GIT_EMAIL:-claude-bot@railway.app}"\n\
+git config --global user.name "${GIT_NAME:-Claude Code Bot}"\n\
+\n\
+echo "✅ Setup complete!"\n\
+echo ""\n\
+echo "🤖 To start Claude Code:"\n\
+echo "   1. Connect to this Railway service via Terminal"\n\
+echo "   2. Run: claude auth"\n\
+echo "   3. Run: claude"\n\
+echo "   4. Start autonomous mode: /ralph-loop"\n\
+echo ""\n\
+echo "📍 Current directory: $(pwd)"\n\
+echo "📁 Repository ready at: /app/Midnight_Code"\n\
+echo ""\n\
+\n\
+tail -f /dev/null' > /app/start.sh && chmod +x /app/start.sh
 
 # Expose port (Railway requirement)
 EXPOSE 8080
