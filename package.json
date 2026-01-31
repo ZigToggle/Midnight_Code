@@ -1,0 +1,11 @@
+{
+  "name": "midnight-code-railway",
+  "version": "1.0.0",
+  "description": "Claude Code on Railway for iOS to Android translation",
+  "scripts": {
+    "start": "bash ./start-simple.sh"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
