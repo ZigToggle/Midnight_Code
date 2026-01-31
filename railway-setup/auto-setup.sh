@@ -61,10 +61,14 @@ chown claudeuser:claudeuser /home/claudeuser/start-ralph.sh
 echo ""
 echo "✅ Setup complete!"
 echo ""
-echo "Starting Claude in tmux session 'ralph'..."
-echo "To detach: Ctrl+B then D"
-echo "To reconnect: railway ssh → su - claudeuser → tmux attach -t ralph"
+echo "📋 To start Claude:"
+echo "   railway ssh"
+echo "   su - claudeuser"
+echo "   tmux new -s ralph ~/start-ralph.sh"
 echo ""
+echo "Or run: railway ssh -c 'su - claudeuser -c \"tmux new -s ralph ~/start-ralph.sh\"'"
+echo ""
+echo "Container ready. Keeping alive..."
 
-# Start tmux as claudeuser with Ralph Loop
-su - claudeuser -c 'tmux new -s ralph ~/start-ralph.sh'
+# Keep container alive
+tail -f /dev/null
