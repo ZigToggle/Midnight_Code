@@ -28,7 +28,13 @@ EOF
 
 # Save OAuth token for claudeuser
 echo "4. Configuring OAuth token..."
-echo "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" > /home/claudeuser/.claude/token
+# Use latest token from the session
+if [ -f /tmp/claude_token.txt ]; then
+    cp /tmp/claude_token.txt /home/claudeuser/.claude/token
+else
+    # Fallback to hardcoded token
+    echo "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" > /home/claudeuser/.claude/token
+fi
 
 # Give ownership of /app to claudeuser
 echo "5. Setting permissions..."
