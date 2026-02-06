@@ -1,0 +1,8 @@
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Linear API key
+linear-api-key.txt
+linear-config.json
